@@ -5,8 +5,8 @@ export class UserModel implements UserInterface {
   id: string;
   nick: string;
   avatarUrl: string;
-  constructor() {
-    this.id = randomUUID();
+  constructor(id: string) {
+    this.id = id;
     this.nick = 'Unknown' + Math.round(Math.random() * 100) + 1;
     this.avatarUrl = 'http://ugabuga.pl/image';
   }

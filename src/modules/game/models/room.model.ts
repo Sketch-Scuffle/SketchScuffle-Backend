@@ -5,7 +5,9 @@ import { UserStatsInterface } from '../interfaces/user.interface';
 
 export class RoomModel implements RoomInterface {
   id: string;
-  timer: TimerInterface;
+  timer: TimerInterface = {
+    timerTimeout: null,
+  };
   server: Server;
   roomSettings: { currentDrawer: string; roundSeconds: number; category: any };
   users: { [p: string]: UserModel } = {};
@@ -15,16 +17,12 @@ export class RoomModel implements RoomInterface {
 
   constructor(id: string, server: Server) {
     this.id = id;
+    this.server = server;
     this.roomSettings = {
       currentDrawer: '',
       roundSeconds: 1000,
       category: '',
     };
-    this.timer = {
-      timerTimeout: null,
-    };
-
-    this.server = server;
   }
   startGame() {
     if (this.isRunning) {

@@ -1,4 +1,4 @@
-import { Server, Socket } from "socket.io";
+import { Server, Socket } from 'socket.io';
 import { UserModel } from '../models/user.model';
 import { UserStatsInterface } from './user.interface';
 

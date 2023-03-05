@@ -1,7 +1,7 @@
-import { UserResponseInterface } from '../interfaces/user.interface';
 import { UserModel } from '../models/user.model';
+import { UserResponseInterface } from '../interfaces/responses.interface';
 
-export const UserToResponse = (user: UserModel): UserResponseInterface => {
+export const ConvertUserToResponse = (user: UserModel): UserResponseInterface => {
   return {
     id: user.id,
     nick: user.nick,
