@@ -1,37 +1,39 @@
 import {
   OnGatewayConnection,
+  OnGatewayDisconnect,
   OnGatewayInit,
   SubscribeMessage,
   WebSocketGateway,
-  WebSocketServer,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
-import { Injectable } from '@nestjs/common';
 import { GameService } from './game.service';
-import { RoomModel } from './models/room.model';
-import { UserModel } from './models/user.model';
+import { MessageSendInterface } from './interfaces/payloads.interface';
 
-@Injectable()
 @WebSocketGateway({ namespace: 'game' })
-export class GameGateway implements OnGatewayConnection {
-  rooms: { [key: string]: RoomModel } = {};
-  @WebSocketServer() server: Server;
-  constructor(private gameService: GameService) {
-    // TODO Proper id generation | proper room generation
-  }
+export class GameGateway
+  implements OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit
+{
+  constructor(private gameService: GameService) {}
 
-  createRoom() {
-    const roomId = '100';
-    this.rooms[roomId] = new RoomModel(roomId, this.server);
-    return roomId;
+  afterInit(server: Server) {
+    this.gameService.socketServer = server;
   }
 
   handleConnection(client: Socket): any {
-    this.gameService.handleConnection(client, this.rooms);
+    this.gameService.handleConnection(client);
   }
+
+  handleDisconnect(client: Socket) {
+    this.gameService.handleDisconnect(client);
+  }
+
   @SubscribeMessage('startGame')
-  handleStartGame(client: Socket): any {
-    const { room } = this.gameService.getUserData(client);
-    room.startGame();
+  handleStartGame(client: Socket) {
+    this.gameService.handleStartGame(client);
+  }
+
+  @SubscribeMessage('messageSend')
+  handleMessageSend(client: Socket, payload: MessageSendInterface) {
+    this.gameService.handleMessageSend(client, payload);
   }
 }

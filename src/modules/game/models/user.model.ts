@@ -1,4 +1,3 @@
-import { randomUUID } from 'crypto';
 import { UserInterface } from '../interfaces/user.interface';
 
 export class UserModel implements UserInterface {
@@ -12,4 +11,5 @@ export class UserModel implements UserInterface {
   }
 
   roomId: string;
+  socketId: string;
 }

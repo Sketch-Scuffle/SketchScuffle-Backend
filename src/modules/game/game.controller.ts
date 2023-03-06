@@ -1,12 +1,12 @@
 import { Controller, Post } from '@nestjs/common';
-import { GameGateway } from './game.gateway';
+import { GameService } from './game.service';
 
 @Controller('game')
 export class GameController {
-  constructor(private gameGateway: GameGateway) {}
+  constructor(private gameService: GameService) {}
   @Post('/create')
   createGame(): any {
-    const roomId = this.gameGateway.createRoom();
+    const roomId = this.gameService.createRoom();
     return {
       roomId,
     };

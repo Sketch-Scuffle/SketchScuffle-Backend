@@ -1,9 +1,15 @@
 import { Server, Socket } from 'socket.io';
 import { UserModel } from '../models/user.model';
-import { UserStatsInterface } from './user.interface';
+import { PersonalDataInterface, UserStatsInterface } from './user.interface';
 
 export interface TimerInterface {
   timerTimeout: NodeJS.Timeout | null;
+}
+
+export interface CategoryInterface {
+  categoryId: string;
+  name: string;
+  logoUrl: string;
 }
 
 export interface RoomInterface {
@@ -13,11 +19,16 @@ export interface RoomInterface {
   server: Server;
   roomSettings: {
     currentDrawer: string;
+    nextDrawer: string;
     roundSeconds: number;
-    category: any; // TODO Category
+    guessWord: string;
+    category: CategoryInterface; // TODO Category
   };
   users: {
     [key: string]: UserModel;
+  };
+  personalData: {
+    [key: string]: PersonalDataInterface;
   };
   userStats: {
     [key: string]: UserStatsInterface;
