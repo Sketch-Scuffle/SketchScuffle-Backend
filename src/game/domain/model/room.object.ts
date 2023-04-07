@@ -1,5 +1,4 @@
 import { CategoryInterface } from '../../interfaces/room.interface';
-import { Socket } from 'socket.io';
 import { PlayerObject } from './player.object';
 import { PlayerDataI } from './playersData.interface';
 
@@ -33,18 +32,17 @@ export class RoomObject {
       },
     };
   }
-  addPlayer(playerObject: PlayerObject, socket: Socket) {
+  addPlayer(playerObject: PlayerObject): void {
     this.playersData[playerObject.id] = {
       isActive: true,
       playerObject,
       personalData: { rating: 0 },
-      playerSocket: socket,
       playerStats: {
         points: 0,
       },
     };
   }
-  removePlayer(playerId: string) {
+  removePlayer(playerId: string): void {
     delete this.playersData[playerId];
   }
 }
