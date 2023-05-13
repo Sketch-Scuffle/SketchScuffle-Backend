@@ -14,7 +14,7 @@ import { GatewayPlayersI } from './model/gatewayPlayer.interface';
 import { PlayerObject } from '../domain/model/player.object';
 import { MessageType } from '../domain/model/messageType.enum';
 
-@WebSocketGateway({ namespace: 'game' })
+@WebSocketGateway({ namespace: 'game', cors: true })
 export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect {
   players: GatewayPlayersI = {};
   constructor(
